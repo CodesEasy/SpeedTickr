@@ -50,6 +50,11 @@ try {
 Info 'Verifying checksum...'
 $sums = $null
 try { $sums = (Invoke-WebRequest -Uri "$base/SHA256SUMS" -UseBasicParsing).Content } catch { }
+# Windows PowerShell 5.1 (what `irm | iex` runs by default) returns .Content as a
+# byte[] for non-text responses, and GitHub serves release assets as
+# application/octet-stream. Decode to text before parsing, or every "line" is a byte
+# number, nothing matches the asset name, and verification is silently skipped.
+if ($sums -is [byte[]]) { $sums = [System.Text.Encoding]::UTF8.GetString($sums) }
 if (-not $sums) {
   Warn 'could not download SHA256SUMS - skipping verification'
 } else {

@@ -1,0 +1,105 @@
+# Builds every SpeedTickr binary and publishes a GitHub Release whose
+# SHA256SUMS is generated from *those exact* binaries, in one atomic step.
+#
+# Why this exists: the install scripts (install.sh / install.ps1) verify the
+# download against the release's SHA256SUMS. When releases were assembled by
+# hand, the binaries and SHA256SUMS could be uploaded out of order, so a user
+# installing in that window saw "no checksum listed - skipping verification".
+# Generating the sums here from the same build, and only flipping the release
+# out of draft once *all* assets (incl. SHA256SUMS) are attached, makes that
+# window impossible.
+#
+# Trigger: push a tag like v1.2.3 (the normal path), or run it manually against
+# an existing tag via the Actions tab. Pure Go (CGO_ENABLED=0) means all six
+# OS/arch targets cross-compile from this one Linux runner.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to (re)build and publish, e.g. v1.0.0'
+        required: true
+
+permissions:
+  contents: write   # create/update releases and upload assets
+
+# Never let two release runs for the same tag clobber each other's uploads.
+concurrency:
+  group: release-${{ github.event.inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      CGO_ENABLED: '0'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod   # tracks the `go` line in go.mod
+          check-latest: true
+
+      - name: Vet and test
+        run: |
+          go vet ./...
+          go test ./...
+
+      - name: Build all targets
+        run: |
+          set -euxo pipefail
+          mkdir -p dist
+          # GOOS GOARCH <asset-os-label> <ext>
+          # darwin is published under the "macos" label the install scripts expect.
+          build() {
+            goos=$1; goarch=$2; label=$3; ext=${4:-}
+            out="dist/speedtickr-${label}-${goarch}${ext}"
+            ldflags=''
+            # -H windowsgui: no console window flashes when the .exe launches.
+            [ "$goos" = windows ] && ldflags='-H windowsgui'
+            GOOS="$goos" GOARCH="$goarch" \
+              go build -trimpath -ldflags="$ldflags" -o "$out" ./cmd/speedtickr
+          }
+          build linux   amd64 linux
+          build linux   arm64 linux
+          build darwin  amd64 macos
+          build darwin  arm64 macos
+          build windows amd64 windows .exe
+          build windows arm64 windows .exe
+
+      - name: Generate SHA256SUMS
+        working-directory: dist
+        # Plain `sha256sum` output (two spaces, bare filenames) is exactly what
+        # the install scripts parse. Run from inside dist/ so no path prefix leaks in.
+        run: |
+          set -euxo pipefail
+          sha256sum speedtickr-* > SHA256SUMS
+          cat SHA256SUMS
+          # Prove the files on disk match what we just wrote before publishing.
+          sha256sum -c SHA256SUMS
+
+      - name: Publish release (atomic)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
+        run: |
+          set -euxo pipefail
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            # Release already exists: replace every asset in place.
+            gh release upload "$TAG" dist/* --clobber
+          else
+            # New release: create it as a DRAFT with all assets attached, so it
+            # never becomes "latest" until SHA256SUMS is already there.
+            gh release create "$TAG" dist/* \
+              --draft \
+              --title "SpeedTickr $TAG" \
+              --generate-notes
+          fi
+          # Flip to published + mark latest only now that all assets are uploaded.
+          gh release edit "$TAG" --draft=false --latest

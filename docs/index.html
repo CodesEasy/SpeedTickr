@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ===== Primary SEO ===== -->
+<title>SpeedTickr — Live Network Speed Meter for Windows, macOS &amp; Linux</title>
+<meta name="description" content="SpeedTickr is a tiny, free, open-source network speed meter — see your live download and upload usage right on the Windows taskbar, the macOS menu bar, or the Linux top panel. A cross-platform NetSpeedMonitor alternative that still works on Windows 11.">
+<meta name="keywords" content="network speed meter, network speed monitor, NetSpeedMonitor alternative, NetSpeedMonitor Windows 11, taskbar network speed, taskbar speed meter, menu bar net speed, Linux panel network monitor, download upload speed monitor, net speed meter, network usage monitor, open source bandwidth monitor, free network monitor">
+<meta name="author" content="codeseasy">
+<meta name="application-name" content="SpeedTickr">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0e14">
+<link rel="canonical" href="https://speedtickr.com/">
+<link rel="icon" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+
+<!-- ===== Open Graph ===== -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SpeedTickr">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="SpeedTickr — Live network speed meter for your taskbar, menu bar &amp; panel">
+<meta property="og:description" content="See your live download and upload usage in its native spot on Windows, macOS, and Linux. A free, open-source NetSpeedMonitor alternative for Windows 11.">
+<meta property="og:url" content="https://speedtickr.com/">
+<meta property="og:image" content="https://speedtickr.com/logo.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:image:alt" content="SpeedTickr app icon — a green download arrow and a blue upload arrow on a dark rounded square.">
+
+<!-- ===== Twitter ===== -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SpeedTickr — Live network speed meter">
+<meta name="twitter:description" content="Live download &amp; upload usage in its native spot on Windows, macOS, and Linux. A free, open-source NetSpeedMonitor alternative.">
+<meta name="twitter:image" content="https://speedtickr.com/logo.png">
+<meta name="twitter:image:alt" content="SpeedTickr app icon.">
+
+<!-- ===== Structured data: software, FAQ, breadcrumbs (for search + AI discovery) ===== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "SpeedTickr",
+      "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
+      "applicationCategory": "UtilitiesApplication",
+      "applicationSubCategory": "Network Monitor",
+      "keywords": "network speed meter, network speed monitor, NetSpeedMonitor alternative, NetSpeedMonitor Windows 11, taskbar network speed, menu bar net speed, Linux panel network monitor",
+      "description": "A tiny, free, open-source network speed meter that shows your live download and upload usage on the Windows taskbar, the macOS menu bar, or the Linux top panel — a cross-platform NetSpeedMonitor alternative that still works on Windows 11.",
+      "url": "https://speedtickr.com/",
+      "downloadUrl": "https://github.com/codeseasy/speedtickr/releases/latest",
+      "softwareHelp": "https://speedtickr.com/#usage",
+      "license": "https://github.com/codeseasy/speedtickr/blob/main/LICENSE",
+      "isAccessibleForFree": true,
+      "image": "https://speedtickr.com/logo.png",
+      "featureList": [
+        "Real-time download and upload speed",
+        "Lives in the Windows taskbar, macOS menu bar, and Linux top panel",
+        "Configurable units (bps to Tbps) and text size",
+        "Starts at login",
+        "Measures locally and sends nothing anywhere",
+        "VPN-accurate",
+        "Single self-contained binary, no installer"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": { "@type": "Organization", "name": "codeseasy", "url": "https://github.com/codeseasy" }
+    },
+    {
+      "@type": "WebSite",
+      "name": "SpeedTickr",
+      "url": "https://speedtickr.com/",
+      "publisher": { "@type": "Organization", "name": "codeseasy", "url": "https://github.com/codeseasy" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Is SpeedTickr a NetSpeedMonitor alternative?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. SpeedTickr is a modern, open-source NetSpeedMonitor alternative that still works on Windows 11 (and Windows 10), and it also runs on macOS and Linux. Like NetSpeedMonitor, it shows your live download and upload speed on the taskbar, plus the macOS menu bar and the Linux top panel." } },
+        { "@type": "Question", "name": "Why a slim bar instead of inside the Windows 11 taskbar?", "acceptedAnswer": { "@type": "Answer", "text": "NetSpeedMonitor used to embed itself in the taskbar, but Microsoft removed taskbar add-ons in Windows 11. SpeedTickr instead draws its own slim bar right on the taskbar, next to the clock. It is the closest thing that still works on both Windows 10 and Windows 11." } },
+        { "@type": "Question", "name": "Is my data safe?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. SpeedTickr only reads your network counters locally to compute the speed. It makes no connections of its own and sends nothing anywhere. The full source is on GitHub." } },
+        { "@type": "Question", "name": "Does it work on a VPN?", "acceptedAnswer": { "@type": "Answer", "text": "It does, and the numbers stay correct. SpeedTickr follows whichever connection actually reaches the internet, so a VPN or tunnel will not make your speed read double." } },
+        { "@type": "Question", "name": "Windows says \"Windows protected your PC.\"", "acceptedAnswer": { "@type": "Answer", "text": "That is SmartScreen warning about an app that is not code-signed yet. Click More info then Run anyway. Since the source is open, you can see exactly what it does." } },
+        { "@type": "Question", "name": "The tray icon doesn't show on Linux.", "acceptedAnswer": { "@type": "Answer", "text": "On GNOME, install the AppIndicator extension once. KDE, XFCE, Cinnamon, and MATE show it as-is." } },
+        { "@type": "Question", "name": "How do I uninstall it?", "acceptedAnswer": { "@type": "Answer", "text": "Right-click the meter, untick Start at login, choose Quit, then delete the file. There is no installer and nothing left behind." } }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================================
+     SpeedTickr — open-source dev-tool aesthetic.
+     Dark, hairline borders, mono accents. Green=download, blue=upload.
+     ============================================================ */
+  :root{
+    --bg:#0a0e14;
+    --panel:#10151e;
+    --panel-2:#141b25;
+    --panel-3:#1a2330;
+    --line:#1d2632;
+    --line-2:#293441;
+    --line-3:#384656;
+    --text:#eef2f8;
+    --muted:#9aa6b6;
+    --faint:#69748566;
+    --faint-s:#6c7888;
+
+    --green:#34d27b;
+    --green-t:#5ee39b;
+    --green-fill:#0e2a1c;
+    --green-bd:#1c4d35;
+    --blue:#3f8cf7;
+    --blue-t:#82b3ff;
+    --blue-fill:#10233c;
+    --blue-bd:#234668;
+
+    --r-xl:22px; --r-lg:16px; --r:12px; --r-sm:9px; --pill:999px;
+    --maxw:1140px;
+    --shadow:0 24px 60px -28px rgba(0,0,0,.75);
+    --shadow-sm:0 8px 24px -12px rgba(0,0,0,.6);
+    --disp:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
+    line-height:1.62; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    overflow-x:hidden; position:relative;
+  }
+  /* faint dotted texture */
+  body::before{
+    content:""; position:fixed; inset:0; z-index:-2; pointer-events:none; opacity:.5;
+    background-image:radial-gradient(rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size:26px 26px;
+    -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%, #000 35%, transparent 78%);
+            mask-image:radial-gradient(ellipse 90% 60% at 50% 0%, #000 35%, transparent 78%);
+  }
+  a{color:inherit; text-decoration:none}
+  img{max-width:100%; display:block}
+  h1,h2,h3{font-family:var(--disp); line-height:1.08; margin:0; letter-spacing:-.03em; overflow-wrap:break-word}
+  p{margin:0; text-wrap:pretty}
+  ::selection{background:rgba(63,140,247,.32)}
+
+  /* Themed scrollbars — the page and the command boxes, matching the dark UI */
+  *{scrollbar-width:thin; scrollbar-color:var(--line-3) transparent}
+  ::-webkit-scrollbar{width:12px; height:12px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background-color:var(--line-3); background-clip:padding-box; border:3px solid transparent; border-radius:var(--pill)}
+  ::-webkit-scrollbar-thumb:hover{background-color:var(--faint-s)}
+  ::-webkit-scrollbar-corner{background:transparent}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding-inline:clamp(20px,5vw,40px)}
+  .muted{color:var(--muted)}
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:9px; font-family:var(--mono);
+    font-size:.72rem; font-weight:500; letter-spacing:.04em; color:var(--muted);
+    padding:6px 13px 6px 11px; border:1px solid var(--line-2); border-radius:var(--pill); background:var(--panel);
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex:none;box-shadow:0 0 0 3px rgba(52,210,123,.16)}
+
+  /* ---------------- Buttons ---------------- */
+  .btn{
+    position:relative; overflow:hidden;
+    display:inline-flex; align-items:center; justify-content:center; gap:9px;
+    font:inherit; font-weight:600; font-size:.95rem; cursor:pointer; white-space:nowrap; line-height:1.1;
+    padding:13px 22px; min-height:46px; border-radius:12px;
+    border:1px solid var(--line-3);
+    background:linear-gradient(180deg, var(--panel-3), var(--panel-2));
+    color:var(--text);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 1px 2px rgba(0,0,0,.3);
+    transition:transform .16s ease, border-color .16s ease, box-shadow .16s ease, filter .16s ease;
+  }
+  /* sliding sheen on hover */
+  .btn::after{
+    content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
+    background:linear-gradient(105deg, transparent 30%, rgba(255,255,255,.10) 48%, transparent 66%);
+    transform:translateX(-120%); transition:transform .55s ease;
+  }
+  .btn:hover{transform:translateY(-2px); border-color:var(--faint-s); box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 12px 26px -16px rgba(0,0,0,.8)}
+  .btn:hover::after{transform:translateX(120%)}
+  .btn:active{transform:translateY(0); filter:brightness(.97)}
+  .btn:focus-visible{outline:2px solid var(--blue-t); outline-offset:3px}
+  .btn svg{width:18px; height:18px; flex:none; transition:transform .18s ease}
+
+  .btn-primary{
+    background:linear-gradient(180deg,#5497f8,#3a85f3);
+    border-color:#3a85f3; color:#fff; font-weight:700;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.32), 0 10px 28px -12px rgba(63,140,247,.9);
+  }
+  .btn-primary:hover{
+    border-color:#5497f8; transform:translateY(-2px);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.38), 0 16px 34px -14px rgba(63,140,247,1);
+  }
+  /* nudge the download arrow downward on hover */
+  .btn-primary:hover svg{transform:translateY(2px)}
+
+  .btn-ghost{background:transparent; box-shadow:none; border-color:var(--line-2)}
+  .btn-ghost:hover{background:var(--panel); border-color:var(--line-3)}
+
+  .btn-sm{padding:10px 15px; min-height:40px; font-size:.88rem; border-radius:11px}
+
+  /* ---------------- Header ---------------- */
+  header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(150%) blur(14px); background:rgba(10,14,20,.74); border-bottom:1px solid var(--line)}
+  .nav{display:flex; align-items:center; gap:14px; height:62px}
+  .brand{display:flex; align-items:center; gap:10px; font-family:var(--disp); font-weight:600; letter-spacing:-.02em}
+  .brand img{width:30px; height:30px; border-radius:8px}
+  .brand b{font-size:1.06rem; font-weight:600}
+  .nav-links{display:flex; align-items:center; gap:2px; margin-left:auto}
+  .nav-links a{padding:8px 13px; border-radius:9px; color:var(--muted); font-weight:500; font-size:.92rem; transition:.14s}
+  .nav-links a:hover{color:var(--text); background:var(--panel)}
+  .nav .gh{display:inline-flex; align-items:center; gap:8px}
+  .nav .gh svg{width:18px;height:18px}
+  .nav .btn{margin-left:6px}
+
+  /* ---------------- Section scaffolding ---------------- */
+  section{padding-block:clamp(58px,7.5vw,96px)}
+  .sec-head{max-width:48ch; margin:0 auto clamp(38px,4.5vw,56px); text-align:center; display:grid; gap:15px; justify-items:center}
+  .sec-head h2{font-size:clamp(1.7rem,4.4vw,2.6rem); font-weight:600}
+  .sec-head p{color:var(--muted); font-size:clamp(1rem,1.6vw,1.12rem); max-width:50ch}
+
+  /* ---------------- Hero ---------------- */
+  .hero{padding-top:clamp(54px,7vw,96px); padding-bottom:clamp(46px,6vw,80px); position:relative}
+  .hero::before{
+    content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(640px 340px at 82% 4%, rgba(63,140,247,.16), transparent 68%),
+      radial-gradient(520px 320px at 6% 34%, rgba(52,210,123,.10), transparent 70%);
+  }
+  .hero-grid{display:grid; grid-template-columns:1.04fr .96fr; gap:clamp(36px,5vw,64px); align-items:center}
+  .hero h1{font-size:clamp(2.15rem,5.6vw,3.7rem); font-weight:600; margin-top:22px}
+  .hero h1 .accent{color:var(--blue-t)}
+  .hero .lede{font-size:clamp(1.05rem,1.7vw,1.22rem); color:var(--muted); margin-top:20px; max-width:38ch}
+  .hero-cta{display:flex; flex-wrap:wrap; gap:12px; margin-top:30px}
+  .detect-note{margin-top:18px; font-family:var(--mono); font-size:.82rem; color:var(--faint-s); min-height:1.2em}
+  .detect-note b{color:var(--muted); font-weight:500}
+  .trust{display:flex; flex-wrap:wrap; gap:10px 20px; margin-top:24px}
+  .trust span{display:inline-flex; align-items:center; gap:8px; font-size:.86rem; color:var(--muted)}
+  .trust svg{width:15px;height:15px;color:var(--green-t);flex:none}
+
+  /* ---- Hero showcase: the meter living in all three OS bars ---- */
+  .showcase{
+    width:100%; border:1px solid var(--line-2); border-radius:var(--r-xl); background:var(--panel);
+    box-shadow:var(--shadow); padding:clamp(16px,2.4vw,24px); display:grid; gap:14px;
+  }
+  .show-cap{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:2px 4px 4px}
+  .show-cap .live{display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:.74rem; color:var(--muted)}
+  .show-cap .live i{width:7px;height:7px;border-radius:50%;background:var(--green);font-style:normal;box-shadow:0 0 0 0 rgba(52,210,123,.5);animation:pulse 2s infinite}
+  .show-cap .hint{font-family:var(--mono); font-size:.72rem; color:var(--faint-s)}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,210,123,.5)}70%{box-shadow:0 0 0 7px rgba(52,210,123,0)}100%{box-shadow:0 0 0 0 rgba(52,210,123,0)}}
+
+  .plat{display:grid; grid-template-columns:118px 1fr; gap:14px; align-items:center}
+  .plat-meta{display:flex; flex-direction:column; gap:2px; min-width:0}
+  .plat-meta .pn{display:flex; align-items:center; gap:8px; font-weight:600; font-size:.92rem}
+  .plat-meta .pn svg{width:15px;height:15px;flex:none;opacity:.9}
+  .plat-meta .pw{font-family:var(--mono); font-size:.68rem; color:var(--faint-s); white-space:nowrap}
+
+  /* OS bars */
+  .bar{display:flex; align-items:center; gap:9px; border-radius:10px; padding:9px 11px; font-family:var(--mono); font-size:.78rem; min-width:0; overflow:hidden}
+  .bar .ico{width:18px;height:18px;border-radius:5px;flex:none}
+  .bar .grow{flex:1; min-width:8px}
+  .bar .mtr{display:inline-flex; align-items:center; gap:9px; font-weight:500; flex:none}
+  .bar .mtr .seg{display:inline-flex; align-items:center; gap:5px}
+  .bar .mtr svg{width:11px;height:11px;flex:none}
+  .bar .mtr .v{display:inline-block; min-width:4.4ch; text-align:right; font-variant-numeric:tabular-nums}
+  .bar .clk{font-size:.72rem; flex:none; padding-left:9px; border-left:1px solid currentColor}
+
+  .bar.win{background:#0e1620; border:1px solid var(--line-2); color:#cdd8e8}
+  .bar.win .ico{background:var(--blue)}
+  .bar.win .ico.b{background:#2b3645}
+  .bar.win .clk{border-left-color:#26313f; color:#9aa6b6}
+  .bar.mac{background:linear-gradient(#eef1f6,#e3e7ee); border:1px solid #d3d8e1; color:#20242b}
+  .bar.mac .ico{background:#20242b;border-radius:50%}
+  .bar.mac .ico.b{background:#b9c0cc}
+  .bar.mac .clk{border-left-color:#cdd3dd; color:#3a4150}
+  .bar.linux{background:#171221; border:1px solid #2c2440; color:#d6cde8}
+  .bar.linux .ico{background:#7c5cff;border-radius:6px}
+  .bar.linux .ico.b{background:#352b49}
+  .bar.linux .clk{border-left-color:#2c2440; color:#a99bc6}
+
+  .seg.dn{color:var(--green-t)} .bar.mac .seg.dn{color:#159a52}
+  .seg.up{color:var(--blue-t)} .bar.mac .seg.up{color:#2f74e0}
+
+  /* ---------------- Bento features ---------------- */
+  .bento{display:grid; grid-template-columns:repeat(6,1fr); grid-auto-rows:minmax(158px,auto); gap:14px}
+  .cell{
+    border:1px solid var(--line); border-radius:var(--r-lg); background:var(--panel); padding:22px;
+    display:flex; flex-direction:column; transition:transform .18s ease, border-color .18s ease, background .18s ease;
+  }
+  .cell:hover{transform:translateY(-3px); border-color:var(--line-3); background:var(--panel-2)}
+  .cell .ic{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;margin-bottom:15px;background:var(--blue-fill);border:1px solid var(--blue-bd);color:var(--blue-t);flex:none}
+  .cell .ic.green{background:var(--green-fill);border-color:var(--green-bd);color:var(--green-t)}
+  .cell .ic svg{width:21px;height:21px}
+  .cell h3{font-size:1.1rem; font-weight:600; margin-bottom:7px}
+  .cell p{color:var(--muted); font-size:.94rem}
+  .cell .spacer{flex:1; min-height:8px}
+
+  .cell--live{grid-column:span 3; grid-row:span 2}
+  .cell--light{grid-column:span 3}
+  .cell--private{grid-column:span 3}
+  .cell--units{grid-column:span 2}
+  .cell--always{grid-column:span 2}
+  .cell--file{grid-column:span 2}
+
+  /* live mini-graph inside the big cell */
+  .viz{display:flex; align-items:flex-end; gap:5px; height:84px; margin-top:6px; padding:14px 14px 0; border:1px solid var(--line); border-radius:var(--r); background:var(--panel-2)}
+  .viz .b{flex:1; border-radius:3px 3px 0 0; min-width:4px; transition:height .6s cubic-bezier(.4,0,.2,1)}
+  .viz .b.d{background:linear-gradient(var(--green),#1f9d57)}
+  .viz .b.u{background:linear-gradient(var(--blue),#2f74e0)}
+  .live-read{display:flex; gap:18px; margin-top:14px; font-family:var(--mono)}
+  .live-read .lr{display:flex; flex-direction:column; gap:1px}
+  .live-read .lr .k{font-size:.68rem; color:var(--faint-s); display:flex; align-items:center; gap:6px}
+  .live-read .lr .k svg{width:11px;height:11px}
+  .live-read .lr .n{font-size:1.45rem; font-weight:700; line-height:1.1; font-variant-numeric:tabular-nums}
+  .live-read .lr .n span{font-size:.62em; font-weight:500; color:var(--faint-s); margin-left:3px}
+  .live-read .dn .n{color:var(--green-t)} .live-read .up .n{color:var(--blue-t)}
+
+  /* ---------------- How it works ---------------- */
+  .usage-grid{display:grid; grid-template-columns:.82fr 1.18fr; gap:clamp(34px,5vw,64px); align-items:center}
+  .menu-wrap{display:grid; place-items:center}
+  .menu-card{width:100%; max-width:340px; border:1px solid var(--line-2); border-radius:var(--r); overflow:hidden; background:var(--panel); box-shadow:var(--shadow)}
+  .menu-top{padding:11px 16px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:10px; background:var(--panel-2)}
+  .menu-top img{width:18px;height:18px;border-radius:5px}
+  .menu-top span{font-family:var(--mono); font-size:.82rem; color:var(--muted)}
+  .mrow{display:flex; align-items:center; justify-content:space-between; padding:11px 16px; font-size:.92rem; border-bottom:1px solid var(--line); transition:background .12s}
+  .mrow:last-child{border-bottom:0}
+  .mrow:hover{background:var(--panel-2)}
+  .mrow .val{color:var(--muted); font-size:.84rem; font-family:var(--mono)}
+  .mrow.check{gap:10px}
+  .mrow.check::before{content:"✓"; color:var(--green-t); font-weight:800}
+  .steps{list-style:none; padding:0; margin:0; display:grid}
+  .steps li{display:flex; gap:16px; align-items:flex-start; color:var(--muted); padding-bottom:24px; position:relative}
+  .steps li:last-child{padding-bottom:0}
+  .steps li:not(:last-child) .k::after{content:""; position:absolute; left:50%; top:36px; bottom:-24px; width:2px; transform:translateX(-50%); background:var(--line-2)}
+  .steps b{color:var(--text); font-weight:600; font-family:var(--disp)}
+  .steps .k{flex:none; width:36px; height:36px; border-radius:11px; display:grid; place-items:center; position:relative; background:var(--green-fill); border:1px solid var(--green-bd); color:var(--green-t); font-weight:700; font-family:var(--mono); font-size:.95rem}
+
+  /* ---------------- Download ---------------- */
+  .dl-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; align-items:start}
+  .dl-card{position:relative; border:1px solid var(--line); border-radius:var(--r-lg); padding:24px 22px; background:var(--panel); display:flex; flex-direction:column; gap:16px; transition:border-color .2s ease, transform .2s ease}
+  .dl-card:hover{transform:translateY(-2px); border-color:var(--line-3)}
+  .dl-card.you{border-color:var(--blue); background:#0f1d33; box-shadow:var(--shadow-sm)}
+  .dl-badge{position:absolute; top:-12px; left:50%; transform:translateX(-50%); display:none; align-items:center; gap:6px; white-space:nowrap; font-family:var(--mono); font-size:.7rem; font-weight:500; padding:5px 12px; border-radius:var(--pill); background:var(--blue); color:#fff}
+  .dl-card.you .dl-badge{display:inline-flex}
+  .dl-os{display:flex; align-items:center; gap:13px}
+  .dl-os .os-ic{width:36px; height:36px; flex:none; color:var(--text); opacity:.95}
+  .dl-os h3{font-size:1.16rem; font-weight:600}
+  .dl-os .sub{font-family:var(--mono); font-size:.78rem; color:var(--faint-s)}
+  .dl-actions{display:flex; flex-direction:column; gap:9px; margin-top:auto}
+  .dl-actions .btn{width:100%}
+  .arch-note{font-family:var(--mono); font-size:.74rem; color:var(--faint-s); text-align:center}
+  .dl-foot{text-align:center; margin-top:30px; color:var(--muted); font-size:.92rem}
+  .dl-foot a{color:var(--blue-t); font-weight:600}
+
+  /* ---- Download: secondary one-command terminal install ---- */
+  .dl-cli{max-width:790px; margin:clamp(30px,4vw,46px) auto 0; border:1px solid var(--line); border-radius:var(--r-lg); background:var(--panel); padding:clamp(16px,2.2vw,22px)}
+  .dl-cli-top{display:flex; flex-direction:column; gap:3px; margin-bottom:13px}
+  .dl-cli-h{font-family:var(--disp); font-weight:600; font-size:1rem}
+  .dl-cli-s{font-family:var(--mono); font-size:.74rem; color:var(--faint-s)}
+  .cli-tabs{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:11px}
+  .cli-tab{font:inherit; font-family:var(--mono); font-size:.73rem; cursor:pointer; padding:6px 12px; border-radius:var(--pill); color:var(--muted); border:1px solid var(--line-2); background:var(--panel-2); transition:color .14s,border-color .14s,background .14s}
+  .cli-tab:hover{color:var(--text); border-color:var(--line-3)}
+  .cli-tab.is-active{color:#fff; background:var(--panel-3); border-color:var(--line-3)}
+  .cli-pane{display:flex; align-items:center; gap:10px; background:#0b0f16; border:1px solid var(--line-2); border-radius:var(--r); padding:11px 11px 11px 14px}
+  .cli-pane[hidden]{display:none}
+  .cli-pane code{flex:1; min-width:0; overflow-x:auto; white-space:nowrap; font-family:var(--mono); font-size:.83rem; color:var(--text)}
+  .cli-copy{flex:none; font:inherit; font-family:var(--mono); font-size:.73rem; cursor:pointer; padding:7px 13px; border-radius:9px; color:var(--muted); border:1px solid var(--line-3); background:var(--panel-2); transition:color .14s,border-color .14s}
+  .cli-copy:hover{color:var(--text); border-color:var(--faint-s)}
+  .cli-copy.copied{color:var(--green-t); border-color:var(--green-bd)}
+
+  /* ---------------- FAQ ---------------- */
+  .faq{max-width:800px; margin:0 auto; display:grid; gap:11px}
+  details{border:1px solid var(--line); border-radius:var(--r); background:var(--panel); padding-inline:20px; transition:background .2s, border-color .2s}
+  details[open]{background:var(--panel-2); border-color:var(--line-2)}
+  summary{cursor:pointer; list-style:none; padding-block:17px; font-family:var(--disp); font-weight:600; font-size:1.02rem; display:flex; justify-content:space-between; align-items:center; gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary .plus{flex:none; width:20px;height:20px; position:relative}
+  summary .plus::before,summary .plus::after{content:""; position:absolute; background:var(--muted); border-radius:2px}
+  summary .plus::before{top:9px; left:2px; right:2px; height:2px}
+  summary .plus::after{left:9px; top:2px; bottom:2px; width:2px; transition:transform .2s, opacity .2s}
+  details[open] summary .plus::after{transform:rotate(90deg); opacity:0}
+  details > p{color:var(--muted); padding:0 0 18px; font-size:.95rem; max-width:66ch}
+  details a{color:var(--blue-t); font-weight:600}
+
+  /* ---------------- CTA ---------------- */
+  .cta{position:relative; overflow:hidden; text-align:center; border:1px solid var(--line-2); border-radius:var(--r-xl); padding:clamp(42px,6vw,72px) 24px; background:var(--panel)}
+  .cta::before{content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(560px 280px at 50% -12%, rgba(63,140,247,.2), transparent 70%)}
+  .cta h2{font-size:clamp(1.7rem,4.4vw,2.6rem); font-weight:600; position:relative}
+  .cta p{color:var(--muted); margin:14px auto 28px; max-width:48ch; font-size:1.05rem; position:relative}
+  .cta .btn{position:relative}
+
+  /* ---------------- Footer ---------------- */
+  footer{border-top:1px solid var(--line); padding-block:36px; margin-top:8px}
+  .foot{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap}
+  .foot .brand b{font-size:.98rem}
+  .foot-links{display:flex; gap:6px; flex-wrap:wrap}
+  .foot-links a{color:var(--muted); font-size:.89rem; padding:6px 10px; border-radius:8px; transition:.14s}
+  .foot-links a:hover{color:var(--text); background:var(--panel)}
+  .foot .copy{color:var(--faint-s); font-family:var(--mono); font-size:.78rem; width:100%; margin-top:4px}
+
+  /* ---------------- Responsive ---------------- */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr; text-align:center}
+    .hero .lede{margin-inline:auto}
+    .hero-cta,.trust{justify-content:center}
+    .mock-stage,.showcase-stage{order:-1}
+    .showcase{max-width:560px; margin-inline:auto; text-align:left}
+    .bento{grid-template-columns:repeat(2,1fr); grid-auto-rows:auto}
+    .cell--live{grid-column:span 2; grid-row:auto}
+    .cell--light,.cell--private,.cell--units,.cell--always,.cell--file{grid-column:span 1}
+    .usage-grid{grid-template-columns:1fr; gap:38px}
+    .steps{max-width:460px; margin-inline:auto; text-align:left}
+    .dl-grid{grid-template-columns:1fr; max-width:470px; margin-inline:auto}
+    .dl-card{flex-direction:row; flex-wrap:wrap; align-items:center}
+    .dl-os{flex:1}
+    .dl-actions{flex-direction:row; flex-wrap:wrap; width:100%}
+    .dl-actions .btn{flex:1; width:auto}
+    .arch-note{width:100%}
+  }
+  @media (max-width:620px){
+    .nav-links{display:none}
+    .bento{grid-template-columns:1fr}
+    .cell--live{grid-column:span 1}
+    .plat{grid-template-columns:96px 1fr; gap:11px}
+    .plat-meta .pw{display:none}
+    .bar .clk{display:none}
+    .dl-card{flex-direction:column; align-items:stretch}
+    .dl-actions{flex-direction:column}
+    .foot{justify-content:center; text-align:center}
+    .foot-links{justify-content:center}
+  }
+  @media (max-width:430px){
+    .hero h1{font-size:clamp(1.9rem,9vw,2.4rem)}
+    .btn{padding:12px 16px}
+    .plat{grid-template-columns:1fr; gap:7px}
+    .plat-meta{flex-direction:row; align-items:center; gap:8px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important; scroll-behavior:auto!important; transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="arrowDown" viewBox="0 0 24 24"><path fill="currentColor" d="M9 3h6v9h4l-7 8-7-8h4z"/></symbol>
+    <symbol id="arrowUp" viewBox="0 0 24 24"><path fill="currentColor" d="M9 21h6v-9h4l-7-8-7 8h4z"/></symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="SpeedTickr home">
+      <img src="logo.png" alt="" width="30" height="30">
+      <b>SpeedTickr</b>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#features">Features</a>
+      <a href="#download">Download</a>
+      <a href="#usage">How it works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-sm btn-ghost gh" href="https://github.com/codeseasy/speedtickr" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12 11.5 11.5 0 0 0 8.36 23c.58.1.79-.25.79-.56v-2c-3.2.69-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.05-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.04 1.77 2.73 1.26 3.4.96.1-.75.4-1.26.74-1.55-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.58.23 2.75.12 3.04.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.28 5.69.42.36.78 1.05.78 2.12v3.14c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+      GitHub
+    </a>
+    <a class="btn btn-primary btn-sm" href="#download">Download</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" data-screen-label="Hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dot"></span> open-source · win · macos · linux</span>
+        <h1>Your network usage,<br><span class="accent">one glance away.</span></h1>
+        <p class="lede">A tiny live meter for your real-time download &amp; upload speed — on the Windows taskbar, the macOS menu bar, and the Linux top panel.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" id="heroDownload" href="https://github.com/codeseasy/speedtickr/releases/latest" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+            <span id="heroLabel">Download</span>
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/codeseasy/speedtickr" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12 11.5 11.5 0 0 0 8.36 23c.58.1.79-.25.79-.56v-2c-3.2.69-3.88-1.37-3.88-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.05-.72.08-.7.08-.7 1.17.08 1.78 1.2 1.78 1.2 1.04 1.77 2.73 1.26 3.4.96.1-.75.4-1.26.74-1.55-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.5 3.17-1.18 3.17-1.18.63 1.58.23 2.75.12 3.04.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.28 5.69.42.36.78 1.05.78 2.12v3.14c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+            View source
+          </a>
+        </div>
+        <p class="detect-note" id="detectNote">// works on Windows, macOS &amp; Linux</p>
+        <div class="trust">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> No account or setup</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> A few MB of RAM</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Sends nothing anywhere</span>
+        </div>
+      </div>
+
+      <div class="showcase-stage">
+        <div class="showcase" role="img" aria-label="SpeedTickr's live download and upload speed shown in the Windows taskbar, the macOS menu bar, and the Linux top panel.">
+          <div class="show-cap">
+            <span class="live"><i></i> live · every second</span>
+            <span class="hint">one app · three homes</span>
+          </div>
+
+          <div class="plat">
+            <div class="plat-meta">
+              <span class="pn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.4 10.3 4.4v7.1H3zM10.3 12.5v7.1L3 18.6v-6.1zM11.4 4.2 21 2.9v8.6h-9.6zM21 12.5v8.6l-9.6-1.3v-7.3z"/></svg>Windows</span>
+              <span class="pw">taskbar · by clock</span>
+            </div>
+            <div class="bar win">
+              <span class="ico"></span><span class="ico b"></span>
+              <span class="grow"></span>
+              <span class="mtr">
+                <span class="seg dn"><svg aria-hidden="true"><use href="#arrowDown"/></svg><span class="v tick-d">24.8</span>M</span>
+                <span class="seg up"><svg aria-hidden="true"><use href="#arrowUp"/></svg><span class="v tick-u">3.1</span>M</span>
+              </span>
+              <span class="clk">9:41</span>
+            </div>
+          </div>
+
+          <div class="plat">
+            <div class="plat-meta">
+              <span class="pn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.36 1.43c0 1.14-.49 2.27-1.17 3.08-.74.9-1.99 1.57-2.99 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.57-2.27 1.2-2.98.8-.94 2.14-1.64 3.25-1.68.03.13.05.28.05.43zm4.57 15.71c-.03.07-.46 1.58-1.52 3.12-.95 1.34-1.94 2.71-3.43 2.71-1.52 0-1.9-.88-3.63-.88-1.7 0-2.3.91-3.67.91-1.38 0-2.33-1.26-3.43-2.8C3.95 18.31 2.91 15.5 2.91 12.85c0-4.28 2.8-6.55 5.55-6.55 1.45 0 2.68.95 3.6.95.87 0 2.22-1.01 3.9-1.01.61 0 2.89.06 4.37 2.19-.13.09-2.38 1.37-2.38 4.19 0 3.26 2.85 4.42 2.95 4.45z"/></svg>macOS</span>
+              <span class="pw">menu bar · up top</span>
+            </div>
+            <div class="bar mac">
+              <span class="grow"></span>
+              <span class="mtr">
+                <span class="seg dn"><svg aria-hidden="true"><use href="#arrowDown"/></svg><span class="v tick-d">24.8</span>M</span>
+                <span class="seg up"><svg aria-hidden="true"><use href="#arrowUp"/></svg><span class="v tick-u">3.1</span>M</span>
+              </span>
+              <span class="ico b"></span><span class="ico"></span>
+              <span class="clk">9:41</span>
+            </div>
+          </div>
+
+          <div class="plat">
+            <div class="plat-meta">
+              <span class="pn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-2 0-3.2 1.7-3.2 3.8 0 1.4.1 2.3-.6 3.4-.8 1.2-2.4 2.7-2.4 5.3 0 .9.3 1.6.3 2.3-.5.4-1.1.9-1.1 1.6 0 .9 1 .9 1.8 1.3.8.4 1.4 1 2.3 1 .7 0 1.1-.5 1.4-1 .5.1 1 .1 1.5.1s1 0 1.5-.1c.3.5.7 1 1.4 1 .9 0 1.5-.6 2.3-1 .8-.4 1.8-.4 1.8-1.3 0-.7-.6-1.2-1.1-1.6 0-.7.3-1.4.3-2.3 0-2.6-1.6-4.1-2.4-5.3-.7-1.1-.6-2-.6-3.4C15.2 3.7 14 2 12 2z"/></svg>Linux</span>
+              <span class="pw">top panel / tray</span>
+            </div>
+            <div class="bar linux">
+              <span class="ico"></span>
+              <span class="grow"></span>
+              <span class="mtr">
+                <span class="seg dn"><svg aria-hidden="true"><use href="#arrowDown"/></svg><span class="v tick-d">24.8</span>M</span>
+                <span class="seg up"><svg aria-hidden="true"><use href="#arrowUp"/></svg><span class="v tick-u">3.1</span>M</span>
+              </span>
+              <span class="ico b"></span>
+              <span class="clk">9:41</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Features (bento) ===== -->
+  <section id="features" data-screen-label="Features">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">why speedtickr</span>
+        <h2>Tiny, accurate, out of your way</h2>
+        <p>Everything you want from a speed meter, and nothing you don't.</p>
+      </div>
+      <div class="bento">
+        <div class="cell cell--live">
+          <div class="ic green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+          <h3>Live up &amp; down</h3>
+          <p>Real-time download and upload throughput, refreshed every half-second to five seconds — your call.</p>
+          <div class="viz" id="viz" aria-hidden="true"></div>
+          <div class="live-read">
+            <div class="lr dn"><span class="k"><svg viewBox="0 0 24 24"><use href="#arrowDown"/></svg> download</span><span class="n"><span class="tick-d">24.8</span><span>Mbps</span></span></div>
+            <div class="lr up"><span class="k"><svg viewBox="0 0 24 24"><use href="#arrowUp"/></svg> upload</span><span class="n"><span class="tick-u">3.1</span><span>Mbps</span></span></div>
+          </div>
+        </div>
+
+        <div class="cell cell--light">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
+          <h3>Featherlight</h3>
+          <p>A few MB of memory and almost no CPU. It just polls a counter on a timer — that's it.</p>
+        </div>
+
+        <div class="cell cell--private">
+          <div class="ic green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Private &amp; accurate</h3>
+          <p>Measures locally and sends nothing anywhere. It even avoids double-counting when you're on a VPN.</p>
+        </div>
+
+        <div class="cell cell--units">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div>
+          <h3>Your unit &amp; size</h3>
+          <p>bps, Kbps, Mbps, Gbps or Tbps — plus three text sizes on Windows.</p>
+        </div>
+
+        <div class="cell cell--always">
+          <div class="ic green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <h3>Always on</h3>
+          <p>Starts when you sign in. One click in the menu turns that off.</p>
+        </div>
+
+        <div class="cell cell--file">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4M5 3h9l5 5v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg></div>
+          <h3>One small file</h3>
+          <p>A single binary per OS. No installer, no admin rights, nothing left behind.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== How it works ===== -->
+  <section id="usage" data-screen-label="How it works">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">how it works</span>
+        <h2>Run it, then right-click</h2>
+        <p>One file, no setup. Everything lives in a small menu.</p>
+      </div>
+      <div class="usage-grid">
+        <div class="menu-wrap">
+          <div class="menu-card" role="img" aria-label="SpeedTickr's right-click menu with Units, Update interval, Font size, Start at login, and Quit">
+            <div class="menu-top"><img src="logo.png" alt=""><span>SpeedTickr</span></div>
+            <div class="mrow"><span>Units</span><span class="val">Mbps&nbsp;›</span></div>
+            <div class="mrow"><span>Update interval</span><span class="val">1 s&nbsp;›</span></div>
+            <div class="mrow"><span>Font size</span><span class="val">Small&nbsp;›</span></div>
+            <div class="mrow check"><span>Start at login</span></div>
+            <div class="mrow"><span>Quit</span></div>
+          </div>
+        </div>
+        <div>
+          <ul class="steps">
+            <li><span class="k">1</span><div><b>Open it.</b> Double-click the file (right-click → Open the first time on macOS). Your speed shows up immediately.</div></li>
+            <li><span class="k">2</span><div><b>Right-click to tune it.</b> Switch units, change how often it refreshes, or resize the text.</div></li>
+            <li><span class="k">3</span><div><b>Hover for exact figures.</b> The tooltip shows the precise download and upload numbers.</div></li>
+            <li><span class="k">4</span><div><b>Set and forget.</b> It starts with your session by default, and remembers every choice.</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Download ===== -->
+  <section id="download" data-screen-label="Download">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">download</span>
+        <h2>Get SpeedTickr</h2>
+        <p>Free forever. Pick your system — we'll highlight the one you're on.</p>
+      </div>
+
+      <div class="dl-grid">
+        <div class="dl-card" id="card-windows">
+          <span class="dl-badge">★ recommended for you</span>
+          <div class="dl-os">
+            <svg class="os-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.4 10.3 4.4v7.1H3zM10.3 12.5v7.1L3 18.6v-6.1zM11.4 4.2 21 2.9v8.6h-9.6zM21 12.5v8.6l-9.6-1.3v-7.3z"/></svg>
+            <div><h3>Windows</h3><div class="sub">Windows 10 &amp; 11</div></div>
+          </div>
+          <div class="dl-actions">
+            <a class="btn btn-primary" data-prim="windows-amd64" href="https://github.com/codeseasy/speedtickr/releases/latest/download/speedtickr-windows-amd64.exe">Download (64-bit)</a>
+            <a class="btn btn-sm btn-ghost" href="https://github.com/codeseasy/speedtickr/releases/latest/download/speedtickr-windows-arm64.exe">ARM64</a>
+          </div>
+          <div class="arch-note">Most PCs are 64-bit (Intel/AMD).</div>
+        </div>
+
+        <div class="dl-card" id="card-macos">
+          <span class="dl-badge">★ recommended for you</span>
+          <div class="dl-os">
+            <svg class="os-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.377 0-2.332-1.26-3.428-2.8-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.902-1.01.613 0 2.886.06 4.374 2.19-.13.09-2.383 1.37-2.383 4.19 0 3.26 2.854 4.42 2.955 4.45z"/></svg>
+            <div><h3>macOS</h3><div class="sub">Apple Silicon &amp; Intel</div></div>
+          </div>
+          <div class="dl-actions">
+            <a class="btn btn-primary" data-prim="macos-arm64" href="https://github.com/codeseasy/speedtickr/releases/latest/download/speedtickr-macos-arm64">Download (Apple Silicon)</a>
+            <a class="btn btn-sm btn-ghost" href="https://github.com/codeseasy/speedtickr/releases/latest/download/speedtickr-macos-amd64">Intel Mac</a>
+          </div>
+          <div class="arch-note">M1/M2/M3/M4 → Apple Silicon · older → Intel.</div>
+        </div>
+
+        <div class="dl-card" id="card-linux">
+          <span class="dl-badge">★ recommended for you</span>
+          <div class="dl-os">
+            <svg class="os-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c-2 0-3.2 1.7-3.2 3.8 0 1.4.1 2.3-.6 3.4-.8 1.2-2.4 2.7-2.4 5.3 0 .9.3 1.6.3 2.3-.5.4-1.1.9-1.1 1.6 0 .9 1 .9 1.8 1.3.8.4 1.4 1 2.3 1 .7 0 1.1-.5 1.4-1 .5.1 1 .1 1.5.1s1 0 1.5-.1c.3.5.7 1 1.4 1 .9 0 1.5-.6 2.3-1 .8-.4 1.8-.4 1.8-1.3 0-.7-.6-1.2-1.1-1.6 0-.7.3-1.4.3-2.3 0-2.6-1.6-4.1-2.4-5.3-.7-1.1-.6-2-.6-3.4C15.2 3.7 14 2 12 2zm-1.5 4.3c.4 0 .7.4.7.9s-.3.9-.7.9-.7-.4-.7-.9.3-.9.7-.9zm3 0c.4 0 .7.4.7.9s-.3.9-.7.9-.7-.4-.7-.9.3-.9.7-.9z"/></svg>
+            <div><h3>Linux</h3><div class="sub">x86-64 &amp; ARM64</div></div>
+          </div>
+          <div class="dl-actions">
+            <a class="btn btn-primary" data-prim="linux-amd64" href="https://github.com/codeseasy/speedtickr/releases/latest/download/speedtickr-linux-amd64">Download (x86-64)</a>
+            <a class="btn btn-sm btn-ghost" href="https://github.com/codeseasy/speedtickr/releases/latest/download/speedtickr-linux-arm64">ARM64</a>
+          </div>
+          <div class="arch-note">GNOME needs the AppIndicator extension.</div>
+        </div>
+      </div>
+
+      <!-- Secondary: one-command terminal install. Download buttons above stay primary. -->
+      <div class="dl-cli" aria-label="Install from a terminal">
+        <div class="dl-cli-top">
+          <span class="dl-cli-h">Comfortable with a terminal? Install with one command.</span>
+          <span class="dl-cli-s">// grabs the right build, verifies it, and launches it — starts at login automatically</span>
+        </div>
+        <div class="cli-tabs" role="tablist" aria-label="Choose your shell">
+          <button type="button" class="cli-tab" data-pane="unix" role="tab">macOS / Linux</button>
+          <button type="button" class="cli-tab" data-pane="pwsh" role="tab">Windows · PowerShell</button>
+          <button type="button" class="cli-tab" data-pane="cmd" role="tab">Windows · Command Prompt</button>
+        </div>
+        <div class="cli-pane" data-pane="unix">
+          <code id="cli-unix">curl -fsSL https://speedtickr.com/install.sh | sh</code>
+          <button type="button" class="cli-copy" data-copy="cli-unix">Copy</button>
+        </div>
+        <div class="cli-pane" data-pane="pwsh" hidden>
+          <code id="cli-pwsh">irm https://speedtickr.com/install.ps1 | iex</code>
+          <button type="button" class="cli-copy" data-copy="cli-pwsh">Copy</button>
+        </div>
+        <div class="cli-pane" data-pane="cmd" hidden>
+          <code id="cli-cmd">curl -fsSL https://speedtickr.com/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</code>
+          <button type="button" class="cli-copy" data-copy="cli-cmd">Copy</button>
+        </div>
+      </div>
+
+      <p class="dl-foot">Looking for checksums or older versions? See <a href="https://github.com/codeseasy/speedtickr/releases" rel="noopener">all releases on GitHub</a>.</p>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq" data-screen-label="FAQ">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">good to know</span>
+        <h2>Questions &amp; answers</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Is SpeedTickr a NetSpeedMonitor alternative? <span class="plus"></span></summary>
+          <p>Yes — SpeedTickr is a modern, open-source <b>NetSpeedMonitor alternative</b> that still works on <b>Windows 11</b> (and Windows 10), and it also runs on macOS and Linux. Like NetSpeedMonitor, it shows your live download and upload speed on the taskbar — plus the macOS menu bar and the Linux top panel.</p>
+        </details>
+        <details>
+          <summary>Why a slim bar instead of inside the Windows 11 taskbar? <span class="plus"></span></summary>
+          <p>NetSpeedMonitor used to embed itself in the taskbar, but Microsoft removed taskbar add-ons in Windows 11. So SpeedTickr draws its own little bar right on the taskbar, next to the clock — the closest thing that still works on Windows 10 <b>and</b> 11.</p>
+        </details>
+        <details>
+          <summary>Is my data safe? <span class="plus"></span></summary>
+          <p>Yes. SpeedTickr only reads your network counters locally to compute the speed. It makes no connections of its own and sends nothing anywhere. The full source is on <a href="https://github.com/codeseasy/speedtickr" rel="noopener">GitHub</a>.</p>
+        </details>
+        <details>
+          <summary>Does it work on a VPN? <span class="plus"></span></summary>
+          <p>It does — and the numbers stay correct. SpeedTickr follows whichever connection actually reaches the internet, so a VPN or tunnel won't make your speed read double.</p>
+        </details>
+        <details>
+          <summary>Windows says "Windows protected your PC." <span class="plus"></span></summary>
+          <p>That's SmartScreen warning about an app that isn't code-signed yet. Click <b>More info → Run anyway</b>. Since the source is open, you can see exactly what it does.</p>
+        </details>
+        <details>
+          <summary>The tray icon doesn't show on Linux. <span class="plus"></span></summary>
+          <p>On <b>GNOME</b>, install the <a href="https://extensions.gnome.org/extension/615/appindicator-support/" rel="noopener">AppIndicator extension</a> once. KDE, XFCE, Cinnamon, and MATE show it as-is.</p>
+        </details>
+        <details>
+          <summary>How do I uninstall it? <span class="plus"></span></summary>
+          <p>Right-click the meter, untick <b>Start at login</b>, choose <b>Quit</b>, then delete the file. There's no installer and nothing left behind.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section data-screen-label="Closing CTA">
+    <div class="wrap">
+      <div class="cta">
+        <h2>Keep an eye on your connection.</h2>
+        <p>Free, open source, and featherlight. Download SpeedTickr and see your speed in seconds.</p>
+        <a class="btn btn-primary" id="ctaDownload" href="#download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg>
+          <span id="ctaLabel">Download SpeedTickr</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top">
+      <img src="logo.png" alt="" width="26" height="26">
+      <b>SpeedTickr</b>
+    </a>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="#download">Download</a>
+      <a href="#features">Features</a>
+      <a href="https://github.com/codeseasy/speedtickr" rel="noopener">GitHub</a>
+      <a href="https://github.com/codeseasy/speedtickr/blob/main/LICENSE" rel="noopener">License</a>
+    </nav>
+    <p class="copy">built with Go · MIT licensed · © <span id="year">2026</span> codeseasy</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var REPO = "https://github.com/codeseasy/speedtickr";
+  var DL = REPO + "/releases/latest/download/";
+
+  var ASSETS = {
+    "windows-amd64":"speedtickr-windows-amd64.exe",
+    "windows-arm64":"speedtickr-windows-arm64.exe",
+    "macos-arm64":"speedtickr-macos-arm64",
+    "macos-amd64":"speedtickr-macos-amd64",
+    "linux-amd64":"speedtickr-linux-amd64",
+    "linux-arm64":"speedtickr-linux-arm64"
+  };
+  var OS_LABEL = {windows:"Windows", macos:"macOS", linux:"Linux"};
+
+  function detectOS(){
+    var p = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
+    var ua = navigator.userAgent || "";
+    var s = (p + " " + ua).toLowerCase();
+    if(/android/.test(s)) return "android";
+    if(/iphone|ipad|ipod/.test(s) || (/(macintosh|mac os)/.test(s) && "ontouchend" in document && navigator.maxTouchPoints>1)) return "ios";
+    if(/win/.test(s)) return "windows";
+    if(/mac/.test(s)) return "macos";
+    if(/linux|x11|bsd/.test(s)) return "linux";
+    return "other";
+  }
+
+  function detectArch(){
+    return new Promise(function(resolve){
+      var ua = (navigator.userAgent||"").toLowerCase();
+      if(/aarch64|arm64/.test(ua)){ resolve("arm64"); return; }
+      if(navigator.userAgentData && navigator.userAgentData.getHighEntropyValues){
+        navigator.userAgentData.getHighEntropyValues(["architecture","bitness"]).then(function(h){
+          if(h && h.architecture === "arm") return resolve("arm64");
+          if(h && h.architecture === "x86" && h.bitness === "64") return resolve("amd64");
+          resolve(null);
+        }).catch(function(){ resolve(null); });
+      } else { resolve(null); }
+    });
+  }
+
+  function apply(os, arch){
+    var heroBtn = document.getElementById("heroDownload");
+    var heroLabel = document.getElementById("heroLabel");
+    var note = document.getElementById("detectNote");
+    var ctaBtn = document.getElementById("ctaDownload");
+    var ctaLabel = document.getElementById("ctaLabel");
+
+    if(os === "android" || os === "ios"){
+      note.innerHTML = "// SpeedTickr is a <b>desktop</b> app — Windows, macOS &amp; Linux";
+      heroLabel.textContent = "See downloads";
+      heroBtn.setAttribute("href", "#download");
+      return;
+    }
+    if(!OS_LABEL[os]){
+      note.innerHTML = "// choose your platform below — Windows, macOS &amp; Linux";
+      heroBtn.setAttribute("href", "#download");
+      return;
+    }
+
+    var fallback = (os === "macos") ? "arm64" : "amd64";
+    var useArch = arch || fallback;
+    var key = os + "-" + useArch;
+    if(!ASSETS[key]){ key = os + "-" + fallback; useArch = fallback; }
+
+    var url = DL + ASSETS[key];
+    heroBtn.setAttribute("href", url);
+    heroLabel.textContent = "Download for " + OS_LABEL[os];
+    ctaBtn.setAttribute("href", url);
+    ctaLabel.textContent = "Download for " + OS_LABEL[os];
+
+    var archWord = arch ? (useArch === "arm64" ? "ARM64" : "64-bit") : "";
+    note.innerHTML = "// detected <b>" + OS_LABEL[os] + (archWord ? " · " + archWord : "") + "</b> — other builds below";
+
+    var card = document.getElementById("card-" + os);
+    if(card){
+      card.classList.add("you");
+      card.querySelectorAll(".dl-actions a").forEach(function(b){
+        b.className = (b.getAttribute("href") === url) ? "btn btn-primary" : "btn btn-sm btn-ghost";
+      });
+    }
+  }
+
+  detectArch().then(function(arch){ apply(detectOS(), arch); });
+  try { document.getElementById("year").textContent = String(new Date().getFullYear()); } catch(e){}
+
+  // ---- Build the live mini-graph ----
+  var viz = document.getElementById("viz");
+  var BARS = 22;
+  if(viz){
+    for(var n=0;n<BARS;n++){
+      var b = document.createElement("span");
+      b.className = "b " + (n % 2 ? "u" : "d");
+      b.style.height = (12 + Math.random()*60) + "%";
+      viz.appendChild(b);
+    }
+  }
+
+  var reduce = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  if(!reduce){
+    var samples = [["24.8","3.1"],["57.3","8.4"],["12.0","1.6"],["112","14"],["8.7","0.9"],["43.0","5.2"]];
+    var ticksD = document.querySelectorAll(".tick-d");
+    var ticksU = document.querySelectorAll(".tick-u");
+    var vbars = viz ? viz.querySelectorAll(".b") : [];
+    var i = 0;
+    setInterval(function(){
+      i = (i + 1) % samples.length;
+      ticksD.forEach(function(el){ el.textContent = samples[i][0]; });
+      ticksU.forEach(function(el){ el.textContent = samples[i][1]; });
+      // shift the graph left, push a new pair on the right
+      for(var k=0;k<vbars.length-2;k++){ vbars[k].style.height = vbars[k+2].style.height; }
+      if(vbars.length>=2){
+        vbars[vbars.length-2].style.height = (18 + Math.random()*70) + "%";
+        vbars[vbars.length-1].style.height = (10 + Math.random()*45) + "%";
+      }
+    }, 1100);
+  }
+
+  // ---- Terminal install: shell tabs, copy-to-clipboard, OS-aware default ----
+  (function(){
+    var tabs = [].slice.call(document.querySelectorAll(".cli-tab"));
+    var panes = [].slice.call(document.querySelectorAll(".cli-pane"));
+    if(tabs.length){
+      var show = function(name){
+        tabs.forEach(function(t){ t.classList.toggle("is-active", t.getAttribute("data-pane") === name); });
+        panes.forEach(function(p){ p.hidden = (p.getAttribute("data-pane") !== name); });
+      };
+      tabs.forEach(function(t){ t.addEventListener("click", function(){ show(t.getAttribute("data-pane")); }); });
+      show(detectOS() === "windows" ? "pwsh" : "unix");   // default to the visitor's OS
+    }
+    [].slice.call(document.querySelectorAll(".cli-copy")).forEach(function(btn){
+      var orig = btn.textContent;
+      btn.addEventListener("click", function(){
+        var el = document.getElementById(btn.getAttribute("data-copy"));
+        if(!el) return;
+        var text = el.textContent;
+        var ok = function(){ btn.textContent = "Copied ✓"; btn.classList.add("copied"); setTimeout(function(){ btn.textContent = orig; btn.classList.remove("copied"); }, 1400); };
+        var legacy = function(){ try{ var r = document.createRange(); r.selectNode(el); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); document.execCommand("copy"); s.removeAllRanges(); ok(); }catch(e){} };
+        if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(ok, legacy); } else { legacy(); }
+      });
+    });
+  })();
+})();
+</script>
+</body>
+</html>

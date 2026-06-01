@@ -1,0 +1,20 @@
+# Build output
+/dist/
+/speedtickr
+/speedtickr.exe
+/genresource
+
+# Note: cmd/speedtickr/*.syso are committed on purpose (the embedded Windows exe
+# icon, regenerated via `go generate ./cmd/genresource`) — do not ignore them.
+
+# Local reference material (upstream library source kept only for reading)
+/.reference/
+
+# Editor / OS
+/.idea/
+/.vscode/
+.DS_Store
+
+# AI assistant instructions (kept local)
+CLAUDE.md
+AGENTS.md
